@@ -1,0 +1,32 @@
+####Simulación de series de tiempo####
+##Vamos a simular 1 indicador
+##para la simulación en principio necesitamos alguna información 
+##valor máximo, mínimo, el número de datos
+
+##en este ejemplo vamos a proponer la población en México
+##donde el valor mínimo es 100, máx 120, 15 datos que inicie en 2000
+pob<-sample(100:120,15, replace = F)
+
+##la convertimos en serie de tiempo
+pobts<-ts(pob, frequency = 1,start = (2000))
+end(pobts)
+start(pobts)
+plot(pobts)
+plot(aggregate(pobts))
+
+
+###bajar del inegi la ocupación de las personas
+infor1<-ts(read.csv(("C:\\Users\\SALA-D23\\Downloads\\Indicadores.csv")), frequency = 4, start=(2005))
+infor1
+
+
+
+ejercicio1<-(read.csv(("C:\\Users\\SALA-D23\\Downloads\\2.csv")))
+ejerciciots<-ts(ejercicio1[,1], start = 2005,freq=4, end = 2016)
+ejerciciots
+ejercicio1ts<-ts(ejercicio1[,2], start = 2005,freq=4, end = 2016)
+ejercicio1ts
+ejercicio2ts<-ts(ejercicio1[,3], start = 2005,freq=4, end = 2016)
+ejercicio2ts
+ejercicio3ts<-ts(ejercicio1[,4], start = 2005,freq=4, end = 2016)
+ejercicio3ts
