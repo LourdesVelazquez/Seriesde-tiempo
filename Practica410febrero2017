@@ -1,0 +1,50 @@
+Ejercicio
+
+###Generar 4 objetos con datos aleatorios y que tengan 60 datos
+##objeto 1 número de profesionista (mill)rango de 5 a 8
+##objeto 2 crec pib rango de 0 a 5
+##objeto 3 % de ocupados rango de 40 a 60
+##objeto 4 % de desocupados rango de 3 a 8
+num_prof<-sample(5:8,60, replace = TRUE)
+crec_pib<-sample(0:5,60,replace = TRUE)
+ocupados<-sample(40:60,60,replace = TRUE)
+desocupados<-sample(3:8,60,replace = TRUE)
+
+#1) Una vez que generen los datos hacer un data frame de los 4 objetos
+pceu<-data.frame (num_prof,crec_pib,ocupados,desocupados)
+
+#2) Mostrar en consola los primeros 12 y los últimos 132 datos
+pceu[1:12,]
+pceu[49:60,]
+
+#3) Convertir los objetos en st comenzando en 2010 y son datos mensuales
+num_profts<-ts(num_prof,frequency = 12,start = (2010))
+crec_pibts<-ts(crec_pib,frequency = 12,start = (2010))
+ocupadosts<-ts(ocupados,frequency = 12,start = (2010))
+desocupadosts<-ts(desocupados,frequency = 12,start = (2010))
+end(num_profts)
+
+#4) Graficar los profesionistas y ocupados en la misma imagen
+plot(cbind(num_profts,ocupadosts))
+
+#5) Graficar Pib y desocupados en la misma imagen
+plot(cbind(crec_pibts,desocupadosts))
+
+#6) Graficar todas juntas
+plot(cbind(num_profts,crec_pibts,ocupadosts,desocupadosts))
+
+
+plot(pceu[,1,3])
+
+e2<-data.frame(num_profts,crec_pibts,ocupadosts,desocupadosts)
+plot.ts(e2[,c(1,3)])
+
+###EJERCICIO
+pib<-data.frame(read.csv("C://Users//SALA-D23//Downloads//pib1.csv"))
+st1<-ts(pib,frequency = 1,start = 1980,end = 1990)
+st2<-ts(pib,frequency = 1,start=1991, end = 2000)
+st3<-ts(pib,frequency = 1,start = 2001, end = 2010)
+st4<-ts(pib,frequency = 1, start = 2011, end = 2015)
+
+plot(cbind(st2,st3))
+plot(cbind(st1,st4))
