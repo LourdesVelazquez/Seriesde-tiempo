@@ -1,0 +1,35 @@
+##Para descomponer una st graficamente se utiliza una fn. que se llama decompose
+##por lo que es importante reconocer la st  y 
+desoc<-sample(3:8,44,replace = T)
+tdesoc<-ts(desoc, frequency = 4, start = 2005)
+plot(decompose(tdesoc))
+plot(tdesoc)
+
+tiie<-ts(read.csv("C://Users//SALA-D23//Downloads//TIIE2015.CSV"),frequency = 52, start = 2015)
+plot(tiie)
+plot(decompose(tiie))
+
+pib<-ts(read.csv("C://Users//SALA-D23//Downloads//pib.CSV"),frequency = 4, start = 2007)
+plot(pib)
+plot(decompose(pib))
+View(pib)
+summary(pib)
+depib<-decompose(pib)
+names(depib)
+depib$trend
+depib$seasonal
+
+tasa<-ts(read.csv("C://Users//SALA-D23//Downloads//tarea2.csv"), frequency = 4,start = (2005))
+plot(tasa)
+plot(decompose(tasa))
+View(tasa)
+summary(tasa)
+detasa<-decompose(tasa)
+names(detasa)
+detasa$trend
+detasa$seasonal
+
+##Interpretación de los datos
+##La tasa de desocupación en México tiene una tendencia y se observa una considerable
+##caída en 2008 donde sabemos que sucedió la crisis y de ahí la tasa de desocupación
+##aumenta drásticamente. Despúes se ha mostrado una tendencia de subidas y caidas constantes.
