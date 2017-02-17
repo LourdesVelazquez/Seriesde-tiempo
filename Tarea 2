@@ -1,0 +1,3 @@
+###tasa de desocupación de los 4 trimestres de cada año (2005 al 2016)
+tarea<-ts(read.csv("C://Users//Luls//Documents//regresión//tarea2.csv"), frequency = 4,start = (2005))
+plot(tarea)
