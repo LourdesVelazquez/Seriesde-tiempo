@@ -1,0 +1,9 @@
+###Descomposición clásica###
+#Se utiliza la fn. descompose
+#Otro tipo de descomposición de la estacionariedad,
+#tendencia y estacionariedad es la descomposición
+#por Loess la cual esta basada en un algoritmo que permite
+#descomponer las series de tiempo en 3 elementos: estacionariedad,
+#tendencia y aleatoriedad, una de las ventajas de esta descomposición
+#es el cálculo de la estacionariedad que se obtienen valores de 
+#estacionariedad no constantes, en contraste con el método clásico de descomposición
