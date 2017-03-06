@@ -1,0 +1,8 @@
+#El momento de picos y caídas es predecible
+install.packages("fpp")
+require(fpp)
+plot(window(elect.start=1980), ylab="Gwh", xlab = "year",main = "Australian electricity production")
+#ESTACIONARIEDAD,TENDENCIA,CICLICO
+plot(bricksq, ylab="million units", xlab="year", main="Australian clay brick production")
+#ESTACIONARIEDAD Y CICLICO, NO MUCHA TENDENCIA
+plot(hsales, main="Sales of new one-family houses, USA", ylab="Total sales", xlab="year")
