@@ -1,0 +1,8 @@
+pib<-ts(read.csv("C://Users//Luls//Documents//regresión//pib%.csv"), frequency = 1,start = (1970))
+plot(pib, ylab="PIB %", xlab = "año",main = "% del PIB anual en México de 1970 a 1989")
+seasonplot(pib, s=1, year.labels= TRUE, main="% del PIB anual en México de 1970 a 1989", ylab = "Año", col = rainbow(20),year.labels.left=TRUE,pch=15)
+dec<-decompose(pib)
+sinesta<-pib-dec$seasonal
+sintend<-pib-dec$trend
+plot(sinesta)
+plot(sintend)
