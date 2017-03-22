@@ -1,0 +1,42 @@
+pib<-read.csv("C://Users//SALA-D23//Downloads//crecimiento PIB.csv")
+desoc<-read.csv("C:\\Users\\SALA-D23\\Downloads\\tarea2.csv")
+pibt<-ts(pib)
+desoct<-ts(desoc, frequency = 4, start(2005))
+
+acf(pibt)
+acf(desoct)
+
+
+#Tarea buscar una st de México en donde con el correlograma determinen que tiene ruido blanco
+# otra st donde muestre el correlograma exponga que la st tiene caminata aleatoria
+
+###Modelos lineales para pronósticar
+
+##Son la aplicación de pronósticos lineales como el imgenuo, promedio, ingenuo estacional 
+##y el de derivada arroja la st. Es decir, este pronóstico asume que la observación
+##más importante es la última.
+##Fn. en r naive (serie, h=num de pronósticos)
+
+require(forecast)
+naive (pibt, h=4)
+naive (desoct, h=4)
+
+###Método promedio
+
+##Este método le da el mismo peso a todos los datos u observaciones 
+##es decir, se asume con este método que todas las observaciones tienen la misma
+##importancia por lo que el pronóstico es un promedio de todas las observaciones
+##Fn. en r meanf (serie, h=num de pronósticos)
+
+meanf(pibt, h=4)
+meanf(desoct, h=4)
+
+plot(meanf(desoct, h=4))
+
+###Método ingenuo estacional
+
+##Este método se utiliza en st con alta estacionalidad, este pronóstico consiste
+##en darle el mayor peso o la mayor ponderación al dato del mismo periodo en el año anterior,
+##por ejemplo, trimestre 2 del 2005 es igual al trimestre 2 del 2006
+##Fn. en r 
+snaive(desoct, h=4)
