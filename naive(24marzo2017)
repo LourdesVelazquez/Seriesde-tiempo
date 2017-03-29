@@ -6,7 +6,7 @@
 #con el método clásico de descomposición
 
 #####DESCOMPOSICIÓN CLÁSICA
-desocupacion <- read.csv("/Users/rodrigomondragondillanes/Documents/Series de tiempo/tarea2.csv")
+desocupacion <- read.csv("C:\\Users\\SALA-D23\\Downloads\\tarea2.csv")
 des <- ts(desocupacion,frequency = 4,start = 2005)
 desco <- decompose(des)
 tend1 <- desco$trend
@@ -30,7 +30,7 @@ x11();plot(inge1) #pronostica una constante con límites de confianza de 80 y 95
 inge1
 
 ####EJERCICIO DEL PIB
-pib <- read.csv("/Users/rodrigomondragondillanes/Documents/Series de tiempo/PIB México.csv")
+pib <- read.csv("C:\\Users\\SALA-D23\\Downloads\\pib.csv")
 tspib <- ts(pib[1:36,1],frequency = 4,start = 2007)
 end(tspib)
 x11();plot(tspib)
