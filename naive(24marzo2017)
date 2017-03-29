@@ -1,0 +1,43 @@
+#### Descomposición clásica
+# se utiliza la función decompose 
+#otro tipo de descomposición de la aleatoriedad, tendencia y estacionalidad es la descomposición por Loess, la cual esta basada
+#en un algoritmo que permite descomponer las ST en 3 elementos: aleatoriedad, tendencia y estacionalida, una de las ventajas de 
+#esta descomposición es el cálculo de la estacionalidad que se obtienen valores de estacionalidad no constantes, en contrario 
+#con el método clásico de descomposición
+
+#####DESCOMPOSICIÓN CLÁSICA
+desocupacion <- read.csv("/Users/rodrigomondragondillanes/Documents/Series de tiempo/tarea2.csv")
+des <- ts(desocupacion,frequency = 4,start = 2005)
+desco <- decompose(des)
+tend1 <- desco$trend
+x11();plot(tend1,col="blue")
+
+#####DESCOMPOSICIÓN POR LOOSE
+# se usa la funcion stl(), entonces para descomponer por Loose utilizamos
+des <- ts(desocupacion[1:48,1],frequency = 4,start = 2005) #Refedino mi serie siendo mas especifico al marcar los datos
+desco2 <- stl(des,s.window = "periodic",robust = T) 
+names(desco2)
+desco2 #Nos muestra la tendencia, estacionalidad y leatoriedad/error
+lines(desco2$time.series[,2],col="red") #Obtenemos la tendencia de nuestro objeto, que esta en la segunda columna
+esta2 <- desco2$time.series[,1] #Estacionalidad 
+#install.packages("fpp")
+require(fpp)
+ajus <- seasadj(desco2) #Ajuste de la estacionalidad, para que el pronostico tenga mayor certidumbre 
+
+#PRONÓSTICO MÉTODO INGENUO
+inge1 <- naive(ajus) #Función que pronostica, h es otro argumento donde le indicamos el número de pronóstico, buscar función naive
+x11();plot(inge1) #pronostica una constante con límites de confianza de 80 y 95
+inge1
+
+####EJERCICIO DEL PIB
+pib <- read.csv("/Users/rodrigomondragondillanes/Documents/Series de tiempo/PIB México.csv")
+tspib <- ts(pib[1:36,1],frequency = 4,start = 2007)
+end(tspib)
+x11();plot(tspib)
+clasica <- decompose(tspib)
+lines(clasica$trend,main="Tendencia del PIB",xlab="anio",col="red")
+loose <- stl(tspib,s.window = "periodic",robust = T)
+loose
+lines(loose$time.series[,2],col="blue")
+
+##Podemos notar que alguno de los dos métodos tiene más picos que otra, debemos escoger la descomposición que este más suavizada
