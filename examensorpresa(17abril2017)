@@ -1,0 +1,55 @@
+###Bajar acciones de Televisa diario, precio de cierre 2016
+televisa<-read.csv("C://Users//SALA-D23//Documents//televisa.csv")
+telets<-ts(televisa, start=2016, frequency = 252)
+###Ajustar 4 modelos de suavizado exponencial simple (alpha=.2,.4,.6,.8)
+require(forecast)
+mod1<-ses(telets, alpha = 0.2, initial = "simple", h=8)
+mod2<-ses(telets, alpha = 0.3, initial = "simple", h=8)
+mod3<-ses(telets, alpha = 0.6,initial = "simple", h=8)
+mod4<-ses(telets, alpha = 0.8,initial = "simple", h=8)
+###Graficar y decidir cual de los 4 modelos es el mejor ajuste que tiene
+x11()
+plot(telets,ylab = "Precio de la acción", xlab="meses", main = "Televisa", type ="l" )
+lines(mod1$fitted, col="blue", type="o")
+lines(mod2$fitted, col="red", type="o")
+lines(mod3$fitted, col="green", type="o")
+lines(mod4$fitted, col="pink", type="o")
+legend("topleft", lty = 1, col = c(1,"blue", "red", "green", "pink"), c("datos", expression(alpha==0.2), expression(alpha==0.4), expression(alpha==.6),expression(alpha==.8) ), pch=11)
+###El mejor ajuste es con alpha=.8
+#mod1
+mod11<- telets - mod1$fitted
+mae1<-mean(abs(mod11))####MAE
+rmse1<-sqrt(mean(mod11^2))########RMSE
+m1<-accuracy(mod1)
+m1
+#mod2
+mod21<- telets - mod2$fitted
+mae2<-mean(abs(mod21))####MAE
+rmse2<-sqrt(mean(mod21^2))########RMSE
+m2<-accuracy(mod2)
+m2
+#mod3
+mod31<- telets - mod3$fitted
+mae3<-mean(abs(mod31))####MAE
+rmse3<-sqrt(mean(mod31^2))########RMSE
+m3<-accuracy(mod3)
+m3
+#mod4
+mod41<- telets - mod4$fitted
+mae4<-mean(abs(mod41))####MAE
+rmse4<-sqrt(mean(mod41^2))########RMSE
+m4<-accuracy(mod4)
+m4
+##Crear un vector que compare MAE y RMSE
+mae<-c(mae1,mae2,mae3,mae4)
+rmse<-c(rmse1,rmse2,rmse3,rmse4)
+
+which(grepl(min(mae),mae))
+which(grepl(min(rmse),rmse))
+##Modelo 4
+
+##Tendencia, estacionariedad y ciclos
+
+#Tendencia:no hay tendencia
+#Estacionariedad:no hay estacionariedad
+#Cíclos: existen 5 cíclos aproximadamente cada 2 meses aunque al final del año se ve una gran caída
