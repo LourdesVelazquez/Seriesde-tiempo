@@ -1,0 +1,17 @@
+pesca<-read.csv("C://Users//SALA-D23//Downloads//pesca1.csv")
+pescats<-ts(pesca, start = 2002, frequency = 12)
+plot(pescats)
+
+###Metódo Winter
+require(fpp)
+mod1<-hw(pescats, seasonal="additive")
+mod2<-hw(pescats, seasonal = "multiplicative")
+
+modexp <- holt(pescats,alpha = .8,beta = .2,initial = "simple",exponential = T,h=5)
+
+x11()
+plot(pescats,main = "Volumen de pesca",xlab="Tiempo",ylab="Volumen")
+lines(mod1$fitted,col="red")
+lines(mod2$fitted,col="brown")
+lines(modexp$fitted,col="yellow")
+legend("bottomleft",lty=1,col=c("red","brown","yellow"),legend = c("Holt winter aditivo", "Holt winter multiplicativo","Holt exponencial"))
