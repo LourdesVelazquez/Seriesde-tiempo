@@ -1,0 +1,58 @@
+
+################### Ejercicio en clase ############################# #### utilizar 3 series de tiempo #### serie
+####1) precios diarios del dólar últimos 6 meses 
+#### 2) acciones de ICA diarias cierre de 2016 
+### 3) Últimos 16 años crecimiento (%) del Pib anual 
+### 4) acciones de Bimbo diarias cierre 2016 
+#### 5) una serie que tenga que ver con su trabajo final 
+
+#### 3) analizar las gráficas y decidir qué modelo usar, modelos simples (media, ingenuo, etc), holt, holt amortiguado, holt Winter
+
+#### 4) con cada una de las series hacer una comparación de los datos ajustados de los modelos de predicción (elegir 1 modelo de simple, 1 holt, 1 amortiguado y 1 winter), despues analizar cual ajusta mejor y porque ustedes creen que este modelo realiza el mejor ajuste. Apliquen la función accuracy para saber si su análisis grafico coincide con los resultados del accuracy
+
+
+#### 5) con cada una de las series hacer una comparación de los datos pronosticados de los modelos de predicción (elegir 1 modelo de simple, 1 holt, 1 amortiguado y 1 winter), despues analizar cual pronostica mejor
+
+dolar<-read.csv("C://Users//SALA-D23//Documents//dolar.csv")[,1]
+dolarts<-ts(dolar, start=2016, frequency = 252)
+plot(dolarts, xlab="Días", ylab="Precio", main="Precios del dólar")
+modderiva<-rwf(dolarts, h = 10, drift=TRUE)
+modholt <- holt(dolarts,alpha = .8,beta = .2,initial = "simple",h=5)
+modexp <- holt(dolarts,damped = T,exponential = T)
+lines(mod4$fitted, col="brown", type="o")
+
+
+#metodo básico
+require(forecast)
+mod1<- meanf(dolarts,h=10)
+mod2<-naive(dolarts,h=10)
+mod3<-snaive(dolarts,h=10)
+mod4<-rwf(dolarts, h = 10, drift=TRUE)
+
+#método holt
+mod5 <- holt(dolarts,alpha = .8,beta = .2,initial = "simple",h=5)
+
+#Método amortiguado
+mod6 <- holt(dolarts,alpha = .8,beta = .2,initial = "simple",exponential = T,h=5)
+mod7 <- holt(dolarts,damped = T)
+mod8 <- holt(dolarts,damped = T,exponential = T)
+
+#Método winter
+require(fpp)
+mod9<-hw(dolarts, seasonal="additive")
+mod10<-hw(dolarts, seasonal = "multiplicative")
+
+plot(dolarts,ylab = "Precio", xlab="días", main = "Precio del dólar", type ="l" )
+lines(mod9$fitted, col="blue", type="o")
+lines(mod10$fitted, col="red", type="o")
+lines(mod8$fitted, col="green", type="o")
+lines(mod4$fitted, col="brown", type="o")
+
+
+ica<-read.csv("C://Users//SALA-D23//Documents//ica.csv")
+icats<-ts(ica, start=2016, frequency = 252)
+plot(icats, xlab="Días", ylab="Precio", main="Precios de la acción de ICA")
+
+bimbo<-read.csv("C://Users//SALA-D23//Documents//Bimbo.csv")
+bimbots<-ts(bimbo, start=2016, frequency = 252)
+plot(bimbots, xlab="Días", ylab="Precio", main="Precios de la acción de Bimbo")
