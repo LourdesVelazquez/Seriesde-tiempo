@@ -1,0 +1,61 @@
+require (foreign)
+require(fpp)
+bimbo<-read.csv("C://Users//SALA-D23//Downloads//Bimbo.csv")
+cemex<-read.csv("C://Users//SALA-D23//Downloads//cemex.csv")
+bimbots<-ts(bimbo, frequency = 252, start = 2016)
+cemexts<-ts(cemex, frequency = 252, start = 2016)
+plot(bimbots)
+plot(cemexts)
+
+#1. Revisar si nuestra serie es estacionaria
+#se aplica la prueba de raiz unitaria a trav{es de la fn. adf.test y esperamos que el p-value sea mayor a .05
+adf.test(bimbots)
+dbimbots<-diff(bimbots) #aplicamos la primera diferenciacion con la funcion diff, debido a que la serie original no es estacionaria.
+adf.test(dbimbots)
+#nuestra serie en su 1era diferenciacion se convierte en estacionaria
+
+acf (dbimbots) #en este determinamos el numero que se asocia con los modelos de promedios moviles
+#Para determinar el valor de p que se relaciona con los modelos autorregresivos se utiliza la fn. pacf()
+pacf(dbimbots)
+#es 4
+#Por lo que se propone un modelo ARIMA (4,1,2)
+modbim<- Arima(bimbots, order = c(4,1,2))
+modbim
+modbim1<- Arima(bimbots, order = c(5,1,2))
+modbim1
+#Entre estos 2 modelos habría que revisar el valor de AICc y el menor valor
+#de AICc sería el mejor modelo con el criterio de de AIKAIKE
+modres<-residuals(modbim)
+Box.test(modres, lag=12, type="Ljung-Box") #p value grande sugiere que los residuales son ruido blanco
+mod1<-forecast (modbim, h=12)
+plot (forecast(modbim, h=12), include = 18)
+mod1
+summary(mod1)
+auto.arima(bimbots)
+mod1res<-residuals(modbim1)
+Box.test(mod1res, lag=12, type="Ljung-Box")
+mod2<-forecast (modbim1, h=12)
+x11()
+plot (forecast(modbim1, h=12), include = 25)
+
+adf.test(cemexts)
+dcemexts<-diff(cemexts) 
+adf.test(dcemexts)
+acf (dcemexts) 
+pacf(dcemexts)
+modcemex<- Arima(cemexts, order = c(2,1,2))
+modcemex
+modcemex1<- Arima(cemexts, order = c(3,1,2))
+modcemex1
+modcemres<-residuals(modcemex)
+Box.test(modcemres, lag=12, type="Ljung-Box") 
+mod3<-forecast (modcemex, h=12)
+plot (forecast(modcemex, h=12), include = 18)
+mod3
+summary(mod3)
+auto.arima(cemexts)
+mod1cemres<-residuals(modcemex1)
+Box.test(mod1cemres, lag=12, type="Ljung-Box")
+modce2<-forecast (modcemex1, h=12)
+x11()
+plot (forecast(modcemex1, h=12), include = 25)
